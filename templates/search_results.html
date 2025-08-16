@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+    <hr>
+    
+    {% if results %}
+        <p>Found {{ results|length }} book(s).</p>
+
+        <div class="book-grid">
+            {% for book in results %}
+                <div class="book-card">
+                    <img src="{{ book['Image-URL-M'] }}" alt="{{ book['Book-Title'] }}">
+                    <div>
+                        <strong>{{ book['Book-Title'] }}</strong>
+                        <p>by {{ book['Book-Author'] }}</p>
+                        <a href="{{ url_for('book_page', book_title=book['Book-Title']) }}" class="show-more-btn">Show More</a>
+                        <button class="btn btn-green rate-this-btn" data-title="{{ book['Book-Title'] }}">I've Read This</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p>No books found matching your query. Please try again.</p>
+    {% endif %}
+
+{% endblock %}

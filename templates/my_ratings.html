@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>My Rated Books</h2>
+    <hr>
+    
+    {% if ratings %}
+        <p>You have rated {{ ratings|length }} book(s).</p>
+
+        <div class="book-grid">
+            {% for item in ratings %}
+                <div class="book-card">
+                    <img src="{{ item['Image-URL-M'] }}" alt="{{ item['Book-Title'] }}">
+                    <div>
+                        <strong>{{ item['Book-Title'] }}</strong>
+                        <p>by {{ item['Book-Author'] }}</p>
+                        <p><strong>Your Rating: {{ item['Book-Rating'] }}/10</strong></p>
+                        <a href="{{ url_for('book_page', book_title=item['Book-Title']) }}" class="show-more-btn">View Page</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p>You haven't rated any books yet. Start by searching for a book or browsing our popular list!</p>
+    {% endif %}
+
+{% endblock %}

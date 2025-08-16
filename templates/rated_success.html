@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Thank You!</h2>
+    <p>Your rating for '{{ book_title }}' has been saved.</p>
+    <br>
+    <p>Because you've rated a new book, your recommendations have been updated!</p>
+    <a href="{{ url_for('home') }}" class="show-more-btn">See My New Recommendations</a>
+{% endblock %}

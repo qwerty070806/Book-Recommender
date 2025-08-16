@@ -1,0 +1,12 @@
+# PyCharm files
+.idea/
+
+# Virtual environment
+.venv/
+venv/
+
+# SQLite Database file
+users.db
+
+# Python cache
+__pycache__/

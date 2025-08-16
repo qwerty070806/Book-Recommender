@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Book Recommender</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; }
+        .navbar { background: #333; color: white; padding: 1em; display: flex; justify-content: space-between; }
+        .navbar a { color: white; text-decoration: none; margin-left: 1em; }
+        .content { padding: 2em; }
+        h1, h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 0.5em; background: #f9f9f9; padding: 0.5em; border-radius: 4px; display: flex; align-items: center; gap: 1em; }
+        li img { max-width: 80px; height: auto; }
+        li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1em; }
+        .show-more-btn { display: inline-block; margin-top: 10px; padding: 5px 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
+        .show-more-btn:hover { background-color: #0056b3; }
+        .flashes {
+            list-style: none;
+            padding: 15px;
+            margin-bottom: 1em;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+        }
+
+        /* Add this CSS for the star rating system */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse; /* This is the key trick */
+            justify-content: flex-end;
+            margin-bottom: 1em;
+        }
+
+        .star-rating input[type="radio"] {
+            display: none; /* Hide the actual radio buttons */
+        }
+
+        .star-rating label {
+            font-size: 2em;
+            color: #808080; /* Color of an unselected star */
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        /* When you hover over a star, light up it and all the stars before it */
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f5b301; /* Color of a star on hover */
+        }
+
+        /* Keep the selected stars lit */
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #f5b301;
+        }
+
+        .star-form input[type="submit"] {
+            padding: 8px 15px;
+            background: #28a745; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .star-form input[type="submit"]:hover {
+            background: #218838;
+        }
+        /* Add this CSS for the static star display */
+        .star-rating-display .star {
+            font-size: 2em;
+            color: #ddd;
+        }
+        .star-rating-display .star.rated {
+            color: #f5b301;
+        }
+
+        /* Add this CSS for the new button */
+        .mark-read-btn {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 5px; /* Add some space between buttons */
+            padding: 5px 10px;
+            background-color: #6c757d; /* A neutral grey color */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .mark-read-btn:hover {
+            background-color: #5a6268;
+        }
+        /* Add this CSS for the modal pop-up */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+    /* --- NEW CSS FOR THE SEARCH BAR --- */
+        .search-form {
+            display: flex;
+        }
+        .search-form input[type="text"] {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-right: none; /* Make it look connected to the button */
+            border-radius: 4px 0 0 4px; /* Rounded corners only on the left */
+            outline: none;
+        }
+        .search-form button {
+            padding: 6px 10px;
+            background: #555;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 0 4px 4px 0; /* Rounded corners only on the right */
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background: #444;
+        }
+        /* --- NEW CSS FOR THE TWO-COLUMN GRID --- */
+.book-grid {
+    display: flex;         /* This activates Flexbox */
+    flex-wrap: wrap;       /* This allows items to wrap to the next line on small screens */
+    gap: 20px;             /* This creates a 20px space between the book cards */
+}
+
+.book-card {
+    /* This is the key: each card will take up roughly half the container's width */
+    flex-basis: calc(50% - 20px);
+
+    /* These styles are for the card's appearance */
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+    background: #f9f9f9;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important for correct width calculation */
+}
+
+.book-card img {
+    max-width: 80px;
+    height: auto;
+    flex-shrink: 0; /* Prevents image from shrinking */
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div>
+            <a href="{{ url_for('home') }}"><b>Book Recommender</b></a>
+        </div>
+
+        <form action="{{ url_for('search') }}" method="get" class="search-form">
+            <input type="text" name="query" placeholder="Search for a book..." required>
+            <button type="submit">Search</button>
+        </form>
+        <div>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('profile') }}">Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="content">
+<!--        <h1>Welcome!</h1>-->
+        <hr>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes id="flash-messages">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+      // Find the flash message element by its new ID
+      var flashMessages = document.getElementById('flash-messages');
+
+      // If the element exists on the page, set a timeout to hide it
+      if (flashMessages) {
+        setTimeout(function() {
+          flashMessages.style.display = 'none';
+        }, 10000); // 30000 milliseconds = 30 seconds
+      }
+    </script>
+    <div id="ratingModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>You've read this book? Great!</h3>
+        <p>Please give it a rating to get new recommendations.</p>
+        <p id="modalBookTitle" style="font-weight: bold;"></p>
+
+        <form id="modalRatingForm" action="" method="post" class="star-form">
+            <div class="star-rating">
+                <!-- 10 to 1 stars -->
+                <input type="radio" id="modal_star10" name="rating" value="10" required />
+                <label for="modal_star10" title="10 stars">★</label>
+
+                <input type="radio" id="modal_star9" name="rating" value="9" />
+                <label for="modal_star9" title="9 stars">★</label>
+
+                <input type="radio" id="modal_star8" name="rating" value="8" />
+                <label for="modal_star8" title="8 stars">★</label>
+
+                <input type="radio" id="modal_star7" name="rating" value="7" />
+                <label for="modal_star7" title="7 stars">★</label>
+
+                <input type="radio" id="modal_star6" name="rating" value="6" />
+                <label for="modal_star6" title="6 stars">★</label>
+
+                <input type="radio" id="modal_star5" name="rating" value="5" />
+                <label for="modal_star5" title="5 stars">★</label>
+
+                <input type="radio" id="modal_star4" name="rating" value="4" />
+                <label for="modal_star4" title="4 stars">★</label>
+
+                <input type="radio" id="modal_star3" name="rating" value="3" />
+                <label for="modal_star3" title="3 stars">★</label>
+
+                <input type="radio" id="modal_star2" name="rating" value="2" />
+                <label for="modal_star2" title="2 stars">★</label>
+
+                <input type="radio" id="modal_star1" name="rating" value="1" />
+                <label for="modal_star1" title="1 star">★</label>
+            </div>
+
+            <input type="submit" value="Submit Rating">
+        </form>
+    </div>
+</div>
+    <script>
+    var modal = document.getElementById('ratingModal');
+    var modalTitle = document.getElementById('modalBookTitle');
+    var modalForm = document.getElementById('modalRatingForm');
+    var closeBtn = document.getElementsByClassName("close-btn")[0];
+    var rateButtons = document.querySelectorAll('.rate-this-btn');
+
+    rateButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var bookTitle = this.dataset.title;
+            modalTitle.textContent = bookTitle;
+            modalForm.action = '/rate/' + encodeURIComponent(bookTitle);
+            modal.style.display = "block";
+        });
+    });
+
+    closeBtn.onclick = function() { modal.style.display = "none"; }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
