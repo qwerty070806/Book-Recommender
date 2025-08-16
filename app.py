@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 # Define the User model for the database
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
