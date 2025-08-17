@@ -2,7 +2,7 @@
 
 A feature-rich, personalized book recommendation web application built with Python, Flask, and two different machine learning models. The application allows users to create accounts, rate books, and receive both personalized and item-based recommendations.
 
-**Live Demo:** [https://my-book-recommender-app.onrender.com/](https://my-book-recommender-app.onrender.com/) *(Replace with your actual Render URL)*
+**Live Demo:** [https://my-book-recommender-app.onrender.com/](https://my-book-recommender-app.onrender.com/) 
 
 ## Key Features
 
