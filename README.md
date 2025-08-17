@@ -16,6 +16,18 @@ A feature-rich, personalized book recommendation web application built with Pyth
 * **Offline Model Retraining:** A separate script (`retrain_model.py`) allows the recommendation models to be updated with new user ratings, ensuring the recommendations get smarter over time.
 * **Responsive UI:** The frontend is built to be clean, modern, and responsive for both desktop and mobile use.
 
+## How the Recommendation Engines Work
+
+The application uses two different recommendation "engines" working together to create a professional user experience.
+
+### 1. Singular Value Decomposition (SVD): The "Personalized Taste" Engine
+
+This model powers the **"Recommended For You"** section. In SVD, the model tries to find the underlying patterns and features in the rating data and then recommends based on those learned patterns. This allows for personalized recommendations tailored to each user's individual taste.
+
+### 2. Cosine Similarity: The "Item-to-Item" Engine
+
+This model powers the **"Readers who liked this book also liked..."** section. In Cosine Similarity, we represent items (books) as vectors. The model then recommends books based on the distance between these vectors, finding the "nearest" or most similar items to a given book.
+
 
 ## Technologies Used
 
@@ -31,7 +43,7 @@ To run this project locally, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/qwerty070806/Book-Recommender.git](https://github.com/qwerty070806/Book-Recommender.git)
+    git clone [https://github.com/qwerty070806/Book-Recommender.git]
     cd Book-Recommender
     ```
 
