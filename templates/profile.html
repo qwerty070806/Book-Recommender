@@ -1,22 +1,33 @@
 {% extends "layout.html" %}
+{% set page_class = 'full-background' %}
 {% block content %}
-    <h2>Your Profile</h2>
-    <p><strong>User ID:</strong> {{ session['user_id'] }}</p>
-    <a href="{{ url_for('my_ratings') }}" class="show-more-btn">View My Ratings</a>
+<div class="login-container">
+    <div class="login-box">
+        <h2>Your Profile</h2>
+        <p><strong>User ID:</strong> {{ session['user_id'] }}</p>
+        <a href="{{ url_for('my_ratings') }}" class="show-more-btn">View My Ratings</a>
 
-    <hr>
-    
-    <h3>Change Password</h3>
-    <form action="{{ url_for('profile') }}" method="post">
-        <label for="current_password">Current Password:</label><br>
-        <input type="password" id="current_password" name="current_password" required><br><br>
+        <hr>
 
-        <label for="new_password">New Password:</label><br>
-        <input type="password" id="new_password" name="new_password" required><br><br>
+        <h3 class="mt-4">Change Password</h3>
+        <form action="{{ url_for('profile') }}" method="post">
+            <div class="form-group">
+                <input type="password" id="current_password" name="current_password" class="form-control" placeholder=" " required>
+                <label for="current_password">Current Password</label>
+            </div>
 
-        <label for="confirm_password">Confirm New Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+            <div class="form-group">
+                <input type="password" id="new_password" name="new_password" class="form-control" placeholder=" " required>
+                <label for="new_password">New Password</label>
+            </div>
 
-        <input type="submit" value="Change Password">
-    </form>
+            <div class="form-group">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder=" " required>
+                <label for="confirm_password">Confirm New Password</label>
+            </div>
+
+            <button type="submit" class="btn-submit">Update Password</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

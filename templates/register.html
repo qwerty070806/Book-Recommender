@@ -1,18 +1,36 @@
 {% extends "layout.html" %}
+
+{# This tells the layout to use the full-screen background for this page #}
+{% set page_class = 'full-background' %}
+
 {% block content %}
-    <h2>Register</h2>
-    <p>Create a new account to get personalized recommendations.</p>
+<div class="login-container">
+    <div class="login-box">
+        <h1>Create an Account</h1>
+        <p class="subtitle">Sign up to start getting personalized book recommendations.</p>
 
-    <form action="{{ url_for('register') }}" method="post">
-        <label for="user_id">Choose a User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        
-        <label for="password">Create a Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <form action="{{ url_for('register') }}" method="post">
+            <div class="form-group">
+                <input type="text" id="user_id" name="user_id" class="form-control" placeholder=" " required>
+                <label for="user_id">User ID</label>
+            </div>
 
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
-        
-        <input type="submit" value="Register">
-    </form>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder=" " required>
+                <label for="confirm_password">Confirm Password</label>
+            </div>
+
+            <button type="submit" class="btn-submit">Create Account</button>
+        </form>
+
+        <p class="register-link">
+            Already have an account? <a href="{{ url_for('login') }}">Log In</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

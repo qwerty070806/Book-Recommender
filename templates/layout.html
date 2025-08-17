@@ -4,10 +4,46 @@
     <meta charset="utf-8">
     <title>Book Recommender</title>
     <style>
-        body { font-family: sans-serif; margin: 0; }
+        /* --- NEW CSS for Full Screen Background --- */
+
+/* Default body style for all pages */
+/* --- NEW, MORE ROBUST LAYOUT STYLES --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1; /* This is key: makes the content area fill all remaining space */
+    display: flex;
+    flex-direction: column;
+}
+
+/* This applies the background ONLY to the login/register pages */
+body.full-background {
+    background-image: url("{{ url_for('static', filename='background.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* This now only needs to center its content */
+.login-container {
+    flex: 1; /* Make the container fill the .content area */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
         .navbar { background: #333; color: white; padding: 1em; display: flex; justify-content: space-between; }
         .navbar a { color: white; text-decoration: none; margin-left: 1em; }
-        .content { padding: 2em; }
+        .content {  /* padding: 2em; */}
         h1, h2 { color: #333; }
         ul { list-style: none; padding: 0; }
         li { margin-bottom: 0.5em; background: #f9f9f9; padding: 0.5em; border-radius: 4px; display: flex; align-items: center; gap: 1em; }
@@ -175,9 +211,139 @@
     height: auto;
     flex-shrink: 0; /* Prevents image from shrinking */
 }
+        /* --- NEW STYLES FOR LOGIN/REGISTER PAGES --- */
+
+.login-box {
+    max-width: 400px;
+    width: 100%;
+    padding: 2em;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-box h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.login-box .subtitle {
+    margin-bottom: 2em;
+    color: #666;
+}
+
+/* --- Floating Label Form Styles --- */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #999;
+    padding: 0 5px;
+    background: #fff;
+    transition: all 0.2s ease;
+    pointer-events: none; /* Allows click-through to the input */
+    z-index: 0;
+}
+
+/* The magic for the floating label */
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 8px;
+    font-size: 0.8em;
+    color: #333;
+    z-index: 2;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #444;
+}
+
+.register-link {
+    margin-top: 1.5em;
+    font-size: 0.9em;
+}
+        /* --- NEW --- Style for the main image on the book detail page */
+.book-detail-img {
+    max-width: 200px; /* You can adjust this size */
+    height: auto;
+    margin-bottom: 1em;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds a nice shadow */
+}
+    /* --- FOOTER STYLES --- */
+.footer {
+    /* Bootstrap bg-dark already applies a dark background */
+    color: #000000; /* Lighter grey for readability */
+    padding: 2em 0;
+    font-size: 0.9em;
+}
+
+/* Container: everything in one line */
+.footer .container {
+    display: flex;
+    flex-direction: row;      /* Arrange horizontally */
+    align-items: center;
+    justify-content: center;  /* Center all content */
+    gap: 1.5rem;              /* Space between text and icons */
+}
+
+/* Social media list */
+.footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;    /* Icons in a row */
+    gap: 1rem;        /* Space between icons */
+}
+
+/* Social media icons */
+.footer .bi {
+    fill: #000000; /* Default color */
+    transition: fill 0.2s ease-in-out;
+}
+
+.footer a:hover .bi {
+    fill: #ffffff; /* Hover color */
+}
+
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 {{ page_class }}">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="github" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </symbol>
+    </svg>
     <nav class="navbar">
         <div>
             <a href="{{ url_for('home') }}"><b>Book Recommender</b></a>
@@ -198,8 +364,7 @@
         </div>
     </nav>
     <div class="content">
-<!--        <h1>Welcome!</h1>-->
-        <hr>
+
 
         {% with messages = get_flashed_messages() %}
           {% if messages %}
@@ -293,5 +458,21 @@
         }
     }
 </script>
+    {% if request.endpoint not in ['login', 'register', 'profile'] %}
+<footer class="footer mt-auto py-3 bg-dark">
+    <div class="container d-flex">
+        <span class="text-muted">© Book Recommender</span>
+        <ul class="nav list-unstyled d-flex ms-3">
+            <li class="ms-3">
+                <a class="text-muted" href="https://github.com/qwerty070806" target="_blank" aria-label="GitHub">
+                    <svg class="bi" width="24" height="24"><use xlink:href="#github"></use></svg>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+{% endif %}
+
 </body>
 </html>

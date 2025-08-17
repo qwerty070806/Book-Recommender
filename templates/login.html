@@ -1,15 +1,29 @@
 {% extends "layout.html" %}
-{% block content %}
-    <h2>Login</h2>
-    <p>Please enter your credentials to log in.</p>
 
-    <form action="{{ url_for('login') }}" method="post">
-        <label for="user_id">User ID:</label><br>
-        <input type="text" id="user_id" name="user_id" required><br><br>
-        
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        
-        <input type="submit" value="Login">
-    </form>
+{# This variable will tell the layout to use a special class for this page #}
+{% set page_class = 'full-background' %}
+
+{% block content %}
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Welcome Back!</h1>
+            <p class="subtitle">Sign in to get your personalized book recommendations.</p>
+
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="form-group">
+                    <input type="text" id="user_id" name="user_id" class="form-control" placeholder=" " required>
+                    <label for="user_id">User ID</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+
+            <p class="register-link">
+                Don’t have an account? <a href="{{ url_for('register') }}">Register</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}

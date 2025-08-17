@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>{{ title }}</h2>
-    <img src="{{ image_url }}" alt="Cover for {{ title }}">
-    <p><strong>Author:</strong> {{ author }}</p>
-    <p><strong>Year of Publication:</strong> {{ year }}</p>
+    <div class="text-center">
 
-    <hr>
+        <h2>{{ title }}</h2>
+
+        <img src="{{ image_url }}" alt="Cover for {{ title }}" class="book-detail-img">
+
+        <p><strong>Author:</strong> {{ author }}</p>
+        <p><strong>Year of Publication:</strong> {{ year }}</p>
+
+        <hr>
 
     {# --- NEW LOGIC --- #}
     {% if 'user_id' in session %}
@@ -60,5 +64,6 @@
             </li>
         {% endfor %}
     </ul>
+    </div>
 {% endif %}
 {% endblock %}
