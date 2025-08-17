@@ -100,4 +100,4 @@ To run this project locally, follow these steps:
 Found 2733 experienced users.
 
 
-And any UserID which is not the above list is considered as a user with No or Little Rating Experience.
+And any UserID which is not there in the above list or greater than 278,858 is considered as a user with No or Little Rating Experience.
