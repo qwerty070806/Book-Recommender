@@ -73,7 +73,7 @@ To run this project locally, follow these steps:
 * `app.py`: The main Flask application file containing all routes and backend logic.
 * `retrain_model.py`: The offline script to retrain the ML models with new data.
 * `requirements.txt`: A list of all Python dependencies.
-* `your_model.pkl`: The saved, pre-trained SVD model.
+* `model.pkl`: The saved, pre-trained SVD model.
 * `cosine_sim_model.pkl`: The saved data for the Cosine Similarity model.
 * `/templates`: Contains all the HTML files for the user interface.
 * `/static`: Contains static assets like the background image.
