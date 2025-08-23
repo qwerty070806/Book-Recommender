@@ -20,7 +20,7 @@ html, body {
 
 body {
     font-family: 'Lato', sans-serif;
-    background-color: #f4f7f6; /* A very light, soft gray background */
+    background-color: #d9d9d9; /* A very light, soft gray background */
     color: #333; /* A softer black for text */
     display: flex;
     flex-direction: column;
@@ -122,7 +122,7 @@ body.full-background {
 
         .star-rating label {
             font-size: 2em;
-            color: #808080; /* Color of an unselected star */
+            color: #737373; /* Color of an unselected star */
             cursor: pointer;
             transition: color 0.2s;
         }
@@ -447,11 +447,13 @@ body.full-background {
         <div>
             <a href="{{ url_for('home') }}"><b>Book Recommender</b></a>
         </div>
-
+        {% if request.endpoint not in ['login', 'register'] %}
         <form action="{{ url_for('search') }}" method="get" class="search-form">
             <input type="text" name="query" placeholder="Search for a book..." required>
             <button type="submit">Search</button>
         </form>
+        {% endif %}
+
         <div>
             {% if 'user_id' in session %}
                 <a href="{{ url_for('profile') }}">Profile</a>
