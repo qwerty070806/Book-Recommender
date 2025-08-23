@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>Book Recommender</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* --- NEW CSS for Full Screen Background --- */
 
@@ -16,14 +19,31 @@ html, body {
 }
 
 body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f7f6; /* A very light, soft gray background */
+    color: #333; /* A softer black for text */
     display: flex;
     flex-direction: column;
 }
 
+h2 {
+    font-size: 2.5em; /* Increase size */
+    font-weight: 900; /* Use the boldest font weight */
+    margin-bottom: 1em; /* Add some space below the title */
+    color: #2c3e50; /* A deep, professional blue-gray */
+    text-align: center; /* Center the heading */
+}
+
+
 .content {
-    flex: 1; /* This is key: makes the content area fill all remaining space */
+    flex: 1;
     display: flex;
     flex-direction: column;
+    padding: 2em 4em; /* Add 2em top/bottom, 4em left/right padding */
+    width: 100%;
+    max-width: 1400px; /* Set a max-width for very large screens */
+    margin: 0 auto; /* Center the content container */
+    box-sizing: border-box;
 }
 
 /* This applies the background ONLY to the login/register pages */
@@ -45,13 +65,39 @@ body.full-background {
         .navbar { background: #333; color: white; padding: 1em; display: flex; justify-content: space-between; }
         .navbar a { color: white; text-decoration: none; margin-left: 1em; }
         .content {  /* padding: 2em; */}
-        h1, h2 { color: #333; }
+        h1 { color: #333; }
         ul { list-style: none; padding: 0; }
         li { margin-bottom: 0.5em; background: #f9f9f9; padding: 0.5em; border-radius: 4px; display: flex; align-items: center; gap: 1em; }
         li img { max-width: 80px; height: auto; }
         li a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1em; }
-        .show-more-btn { display: inline-block; margin-top: 10px; padding: 5px 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 4px; font-size: 0.9em; }
-        .show-more-btn:hover { background-color: #0056b3; }
+        .show-more-btn { border: none;
+    padding: 10px 20px;
+    border-radius: 50px; /* Pill-shaped buttons */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    margin-top: 8px;
+    font-size: 0.85em;
+    width: 150px; /* Give them a consistent width */
+    background-color: #3498db; /* A nice, friendly blue */
+    color: white;
+     }
+
+        .rate-this-btn{
+        padding: 10px 20px;
+    border-radius: 50px; /* Pill-shaped buttons */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    margin-top: 8px;
+    font-size: 0.85em;
+    width: 150px; /* Give them a consistent width */
+    background-color: #FFDD44; /* A nice, friendly blue */
+    color: white;
+     }
+
+        .show-more-btn:hover { transform: translateY(-3px); /* Lifts the button up slightly */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Add a shadow on hover */ }
         .flashes {
             list-style: none;
             padding: 15px;
