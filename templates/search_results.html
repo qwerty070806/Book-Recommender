@@ -1,8 +1,10 @@
 {% extends "layout.html" %}
+
 {% block content %}
+
     <h2>Search Results for "{{ query }}"</h2>
     <hr>
-    
+
     {% if results %}
         <p>Found {{ results|length }} book(s).</p>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Book Recommender</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         /* --- NEW CSS for Full Screen Background --- */
 
@@ -205,6 +206,58 @@ body.full-background {
     border-radius: 4px;
     box-sizing: border-box; /* Important for correct width calculation */
 }
+
+/* --- NEW CAROUSEL STYLES --- */
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 320px; /* Width of each card */
+
+    /* Card styling */
+    background: #ffffff; /* Use a clean white background */
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5em;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 120px; /* Control image size */
+    height: 180px; /* Ensure consistent image height */
+    object-fit: cover;
+    margin-bottom: 1em;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.swiper-slide .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em; /* Space out the text and buttons */
+}
+
+/* Style the navigation arrows to be more visible */
+.swiper-button-next, .swiper-button-prev {
+    color: #333; /* A dark color for contrast */
+}
+
+.swiper-pagination-bullet-active {
+    background: #333 !important; /* Make active dot match arrows */
+}
+
+
 
 .book-card img {
     max-width: 80px;
@@ -473,6 +526,36 @@ body.full-background {
     </div>
 </footer>
 {% endif %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Initialize Swiper
+    const swiper = new Swiper('.swiper', {
+        // This is the effect that creates the 3D-like carousel
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto', // Shows a dynamic number of slides
+        loop: true, // Allows infinite scrolling
+
+        coverflowEffect: {
+            rotate: 50,       // Slide rotation in degrees
+            stretch: 0,       // Stretch space between slides (in px)
+            depth: 100,       // Depth offset in px (moves slides on z-axis)
+            modifier: 1,      // Effect multiplier
+            slideShadows: true, // Renders shadows of slides
+        },
+
+        // Optional parameters: Pagination and Navigation
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 
 </body>
 </html>
