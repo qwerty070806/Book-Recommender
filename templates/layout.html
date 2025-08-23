@@ -20,7 +20,7 @@ html, body {
 
 body {
     font-family: 'Lato', sans-serif;
-    background-color: #d9d9d9; /* A very light, soft gray background */
+    background-color: #ff7a3d; /* #d9d9d9;  A very light, soft gray background */
     color: #1a1a1a; /* A softer black for text */
     display: flex;
     flex-direction: column;
@@ -602,7 +602,8 @@ body.full-background {
     </div>
 </nav>
 
-{% if request.endpoint not in ['login', 'register'] %}
+{% if request.endpoint not in ['login', 'register','popular'] %}
+{% if 'user_id' in session %}
 <div id="search-modal" class="search-modal-overlay">
     <div class="search-modal-content">
         <button id="search-modal-close" class="close-search-btn">&times;</button>
@@ -613,6 +614,7 @@ body.full-background {
         </form>
     </div>
 </div>
+    {% endif %}
 {% endif %}
     <div class="content">
 
